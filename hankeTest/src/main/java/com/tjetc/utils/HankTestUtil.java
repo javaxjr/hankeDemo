@@ -100,6 +100,7 @@ public class HankTestUtil {
                     System.out.println("请输入购买商品斤数：");
 
                     anInt = input.nextInt();
+
                     product1.setBuyNum(anInt);
                     selectList.add(product1);
                     loop2: while (true){
@@ -145,9 +146,9 @@ public class HankTestUtil {
                         for (Product product1 : selectList) {
                             System.out.println(product1.getChName()+":"+product1.getPrice()+"(元/斤),"+product1.getBuyNum()+"斤,单个商品总价格为"+(product1.getBuyNum())*(Integer.parseInt(product1.getPrice()))+"元");
                         }
-                        System.out.println("---------------------");
+                        System.out.println("---------------------------------------");
                         System.out.println("是否有优惠："+map.get("discount"));
-                        System.out.println("---------------------");
+                        System.out.println("---------------------------------------");
                         System.out.println("购买商品总计为："+map.get("sumPrice")+"元");
                         System.out.println("======================谢谢惠顾====================");
                         break;
@@ -196,6 +197,7 @@ public class HankTestUtil {
                 if (h>=14 && h<=16){
                     sumPrice+=product.getBuyNum()*(price*0.8);
                     map.put("discount","是，草莓限时打 8 折，每天下午2点到4点");
+                    flagStra=true;
                 }else {
                     sumPrice+=product.getBuyNum()*(price);
 
@@ -203,7 +205,6 @@ public class HankTestUtil {
                         map.put("discount","否");
                     }
                 }
-                flagStra=true;
             }else {
                 sumPrice+=product.getBuyNum()*(price);
 
@@ -215,12 +216,13 @@ public class HankTestUtil {
 
         //问题4.顾客 D 在超市购买了若干斤苹果、 草莓和芒果,购物满 100 减 10 块
         if (sumPrice>=100){
-            sumPrice=sumPrice-10;
+            int discount = discountMethod(String.valueOf(sumPrice));
+            sumPrice=sumPrice-discount;
 
             if (flagStra){
                 map.put("discount","是，购物满 100 减 10 块,草莓限时打 8 折，每天下午2点到4点");
             }else {
-                map.put("discount","是，购物满 100 减 10 块");
+                map.put("discount","是，购物满 100 减 10 块，以此类推1");
             }
 
         }
@@ -231,6 +233,30 @@ public class HankTestUtil {
 
         return map;
 
+    }
+
+    /**
+    * @descriprion: 满 100 减 10 块,满 200 减20 块
+    * @author: xujirong
+    * @date: 2023/8/27 21:49
+    * @return: int
+    */
+    public static int discountMethod(String sumPrice){
+
+        String[] split = sumPrice.split("\\.");
+
+        String split0 = split[0];
+        int subInt=0;
+        String sub01 = split0.substring(0, 1);
+        if (split0.length()==3){
+            subInt = Integer.parseInt(sub01+"0");
+        }else if (split0.length()==4){
+            subInt = Integer.parseInt(sub01+"00");
+        }else {
+            subInt = Integer.parseInt(sub01+"000");
+        }
+
+        return subInt;
     }
 
 }
