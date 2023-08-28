@@ -1,6 +1,6 @@
 package com.tjetc.utils;
 
-import com.tjetc.domain.Product;
+import lombok.Data;
 
 import java.util.*;
 
@@ -258,5 +258,24 @@ public class HankTestUtil {
 
         return subInt;
     }
+
+    @Data
+    static
+    class Product {
+
+        /**商品名称*/
+        private int id;
+        /**商品名称*/
+        private String name;
+        /**商品名称*/
+        private String ChName;
+        /**购买商品数量*/
+        private int buyNum;
+        /**商品单价,元/斤*/
+        private String price;
+
+    }
+
+
 
 }
